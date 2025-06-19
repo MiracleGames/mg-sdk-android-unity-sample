@@ -17,7 +17,7 @@
 #### 2.2.1、添加权限
 > 在<manifest></manifest>里面加入权限声明：<br>
 ```xml
-    <!-- 通过包名查询应用 -->
+<!-- 通过包名查询应用 -->
 <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
        tools:ignore="QueryAllPackagesPermission" />
 <!-- 访问网络连接,可能产生GPRS流量 -->
@@ -56,104 +56,104 @@
 注：除MG SDK主工程声明配置以外其他第三方登录配置均为可选配置，游戏可根据当前项目需求进行选择配置。<br>
 
 ```xml
-         <!-- MG用户中心所需activity -->
-         <activity
-            android:name="com.mg.usercentersdk.widget.WrapperActivity"
-            android:configChanges="fontScale|orientation|keyboardHidden|locale|navigation|screenSize|uiMode"
-            android:excludeFromRecents="true"
-            android:hardwareAccelerated="false"
-            android:launchMode="standard"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
-         </activity>
-         <!-- MG用户中心AppKey -->
-         <meta-data
-            android:name="AppKey"
-            android:value="28F92A14A7" >
-         </meta-data>
-         <!-- MG用户中心渠道号 -->
-         <meta-data
-            android:name="ChannelID"
-            android:value="mg" >  <!--不同渠道出包配置-->
-         </meta-data>
-		<!-- 游戏类型表示 -->
-		<meta-data
-			android:name="SINGLE_GAME"
-			android:value="true" > <!--true为单机游戏  false为网游/-->
-		</meta-data>
-         <!-- Unity中用于处理SDK回调消息的脚本对象 -->
-         <meta-data
-            android:name="MIRACLE_GAMES_UNITY3D_OBJECT_NAME"
-            android:value="MiracleGames" />
-         <!-- 微信登录 所需配置，可根据项目需求选择配置 -->
-         <activity
-            android:name="com.mg.game.jqyct.wxapi.WXEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:exported="true"
-            android:launchMode="singleTop">
-         </activity>
-         <!-- 微信登录所需参数 -->
-         <meta-data
-            android:name="wx_appid"
-            android:value="wx1ef681931f302080" >
-         </meta-data>
-         <meta-data
-            android:name="wx_secret"
-            android:value="720489607754132afb1481df767f5009" >
-         </meta-data>
-         <!-- QQ登录 所需配置，可根据项目需求选择配置-->
-         <activity
-            android:name="com.tencent.tauth.AuthActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:noHistory="true"
-            android:launchMode="singleTask" >
-             <intent-filter>
-                 <action android:name="android.intent.action.VIEW" />
-                 <category android:name="android.intent.category.DEFAULT" />
-                 <category android:name="android.intent.category.BROWSABLE" />
-                 <data android:scheme="tencent101946544" />
-             </intent-filter>
-         </activity>
-         <activity
-            android:name="com.tencent.connect.common.AssistActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="behind"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-         <meta-data
-            android:name="qq_appid"
-            android:value="tencent101946544" >
-         </meta-data>
-         <!-- Facebook 所需Activity，可根据项目需求选择配置-->
-         <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
-         <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
-         <activity
-            android:name="com.facebook.CustomTabActivity"
-            android:exported="true">
-             <intent-filter> <action android:name="android.intent.action.VIEW" />
-                 <category android:name="android.intent.category.DEFAULT" />
-                 <category android:name="android.intent.category.BROWSABLE" />
-                 <data android:scheme="@string/fb_login_protocol_scheme" />
-             </intent-filter>
-         </activity>
-         <!-- Google登录 所需配置，可根据项目需求选择配置-->
-         <!-- Google 客户端ID -->
-         <meta-data
-            android:name="SERVER_CLIENT_ID"
-            android:value="545888706329-mtpbbnjn1h8uaeb3lt3hgcot5f118jce.apps.googleusercontent.com" >
-         </meta-data>
-         <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-         <!-- GoogleLogin 所需Activity -->
-         <activity 
-           android:excludeFromRecents="true" 
-           android:exported="false" 
-           android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity" 
-           android:theme="@android:style/Theme.Translucent.NoTitleBar"/>	  
+<!-- MG用户中心所需activity -->
+<activity
+android:name="com.mg.usercentersdk.widget.WrapperActivity"
+android:configChanges="fontScale|orientation|keyboardHidden|locale|navigation|screenSize|uiMode"
+android:excludeFromRecents="true"
+android:hardwareAccelerated="false"
+android:launchMode="standard"
+android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
+</activity>
+<!-- MG用户中心AppKey -->
+<meta-data
+android:name="AppKey"
+android:value="28F92A14A7" >
+</meta-data>
+<!-- MG用户中心渠道号 -->
+<meta-data
+android:name="ChannelID"
+android:value="mg" >  <!--不同渠道出包配置-->
+</meta-data>
+<!-- 游戏类型表示 -->
+<meta-data
+android:name="SINGLE_GAME"
+android:value="true" > <!--true为单机游戏  false为网游/-->
+</meta-data>
+<!-- Unity中用于处理SDK回调消息的脚本对象 -->
+<meta-data
+android:name="MIRACLE_GAMES_UNITY3D_OBJECT_NAME"
+android:value="MiracleGames" />
+<!-- 微信登录 所需配置，可根据项目需求选择配置 -->
+<activity
+android:name="com.mg.game.jqyct.wxapi.WXEntryActivity"
+android:theme="@android:style/Theme.Translucent.NoTitleBar"
+android:exported="true"
+android:launchMode="singleTop">
+</activity>
+<!-- 微信登录所需参数 -->
+<meta-data
+android:name="wx_appid"
+android:value="wx1ef681931f302080" >
+</meta-data>
+<meta-data
+android:name="wx_secret"
+android:value="720489607754132afb1481df767f5009" >
+</meta-data>
+<!-- QQ登录 所需配置，可根据项目需求选择配置-->
+<activity
+android:name="com.tencent.tauth.AuthActivity"
+android:configChanges="orientation|keyboardHidden"
+android:noHistory="true"
+android:launchMode="singleTask" >
+    <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="tencent101946544" />
+    </intent-filter>
+</activity>
+<activity
+android:name="com.tencent.connect.common.AssistActivity"
+android:configChanges="orientation|keyboardHidden|screenSize"
+android:screenOrientation="behind"
+android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+<meta-data
+android:name="qq_appid"
+android:value="tencent101946544" >
+</meta-data>
+<!-- Facebook 所需Activity，可根据项目需求选择配置-->
+<meta-data
+android:name="com.facebook.sdk.ApplicationId"
+android:value="@string/facebook_app_id"/>
+<activity android:name="com.facebook.FacebookActivity"
+android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+android:label="@string/app_name" />
+<activity
+android:name="com.facebook.CustomTabActivity"
+android:exported="true">
+    <intent-filter> <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="@string/fb_login_protocol_scheme" />
+    </intent-filter>
+</activity>
+<!-- Google登录 所需配置，可根据项目需求选择配置-->
+<!-- Google 客户端ID -->
+<meta-data
+android:name="SERVER_CLIENT_ID"
+android:value="545888706329-mtpbbnjn1h8uaeb3lt3hgcot5f118jce.apps.googleusercontent.com" >
+</meta-data>
+<meta-data
+android:name="com.google.android.gms.version"
+android:value="@integer/google_play_services_version" />
+<!-- GoogleLogin 所需Activity -->
+<activity 
+android:excludeFromRecents="true" 
+android:exported="false" 
+android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity" 
+android:theme="@android:style/Theme.Translucent.NoTitleBar"/>	  
 ```
 #### 2.2.3、修改游戏主入口 activity
 修改游戏主入口activity为“com.mg.usercentersdk.MGUnityActivity”
