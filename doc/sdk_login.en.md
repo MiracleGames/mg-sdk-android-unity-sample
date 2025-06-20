@@ -1,63 +1,110 @@
-# Android SDK Login
+# Unity Access to Android SDK Login
 
-## 1. Introduction
-This document describes how to integrate the Miracle Games Android SDK's login interface to open the login window.
+## 1、 Initialization
+　　This article introduces how to integrate the login interface of the Miracle Games Android SDK in the Unity engine to display the login window.
 
-## 2. User Login
-### 2.1. Call the SDK's login function to display the login interface and enable user login. Success or failure of the login will send corresponding callback messages to the game.
-Note: Login must be performed after successful initialization, or it can be called within the initialization success callback.
-```java
-MGSdkPlatform.get_instance().login(this, new mg_login_listener() {
-    @Override
-    public void on_success(String msg) {
-        // Log.d(TAG, "Login successful;" + "msg===" + msg); // Original Chinese comment
-        Log.d(TAG, "Login successful; msg: " + msg); // Translated comment
-        try {
-            JSONObject json = new JSONObject(msg);
-            String user_id = json.getString("userId"); // Unique user identifier
-            String token = json.getString("token"); // Verification token
-            // Log.d(TAG, "userId===" + userId+";token="+token); // Original Chinese comment
-            Log.d(TAG, "userId: " + user_id + "; token: " + token); // Translated comment
-        } catch (JSONException e) {
-            e.print_stack_trace();
-        }
-    }
+## 2、 Account Login
+Interface Description:<br>
 
-    @Override
-    public void on_failed(String msg) {
-        // Log.d(TAG, "Login failed;" + "msg===" + msg); // Original Chinese comment
-        Log.d(TAG, "Login failed; msg: " + msg); // Translated comment
-    }
-});
+Call the login function of SDK to realize user login. Successful, failed or canceled login will send the corresponding callback message to the game. Please refer to Login Callback.<br>
+
+Method definition: void login()<br>
+
+Example:<br>
+```C#
+public void login() {
+	using (AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer")) {
+		using (AndroidJavaObject jo = jc.GetStatic("currentActivity")) {
+			jo.Call("login");
+		}
+	}
+}
 ```
 
-### 2.2. Implement In-Game Login
-After a player successfully logs in, developers can use the "userId" returned by the login callback as the player's unique identifier to complete the in-game login.
+## 3、 Account logout
+Interface Description:<br>
 
-## 3. Account Logout
-Log out of the currently logged-in account to perform operations such as switching accounts.
-```java
-// 'this' refers to an Android Activity object
-MGSdkPlatform.get_instance().logout(MainActivity.this, new mg_logout_listener() {
-    @Override
-    public void on_success(String msg) {
-        // Log.d(TAG, "Logout successful;" + "msg===" + msg); // Original Chinese comment
-        Log.d(TAG, "Logout successful; msg: " + msg); // Translated comment
-    }
-    @Override
-    public void on_failed(String msg) {
-        // Log.d(TAG, "Logout failed;" + "msg===" + msg); // Original Chinese comment
-        Log.d(TAG, "Logout failed; msg: " + msg); // Translated comment
-    }
-});
+Log out of the currently logged in account, you can switch account related operations. (You can switch accounts, and the same logout callback message will be returned if the switching account is successfully logged in)<br>
 
+Method definition:void logout()<br>
+
+Example:<br>
+```C#
+public void logout() {
+	using (AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))  {
+		using (AndroidJavaObject jo = jc.GetStatic("currentActivity")) {
+			jo.Call("logout");
+		}
+	}
+}
 ```
 
-## 4. Server-Side Player Login Status Verification Interface
-Server-side user login status verification is not mandatory.
-Refer to [Section 4: Server-Side Player Login Status Verification Interface](https://doc.mguwp.net/androidlogin.html) in the reference link.
+## 4、 Login Callbacks
+Interface Description:<br>
 
-## 5. Best Practices
-* After a user logs in, the login status will be maintained as long as the user does not log out or uninstall the application.
-* After successful initialization, you should determine if the user is logged in. If not logged in, provide a login button; clicking it will open the login interface. If already logged in, you should proceed with the game logic.
-* Users may perform operations such as logging out or switching accounts on the login interface. After returning from the login interface, you need to obtain the user's login status and ID, compare it with the status before opening the login, and then perform corresponding logical processing.
+When the account login interface is called, a callback message is sent to the appropriate method.<br>
+
+Method Definition: void onLoginFinish(string message)<br>
+
+Parameter Description:<br>
+
+The value of the message parameter is: "xx,xx,xx,xx,xx..." . Separated by commas.<br>
+
+The first value is the login result. success=success; fail=failure<br>
+
+The 2nd value is a user unique identifier, which can be used as a player identifier in the game<br>
+
+The third value is the player login authentication token<br>
+
+The fourth value is the user name<br>
+
+Example:<br>
+```C#
+void onLoginFinish(string message) {
+	Debug.Log("===onLoginFinish : " + message);
+	string[] temp = message.Split(new char[] { ',' });
+	if (temp != null && temp.Length >= 0) {
+		string result = temp[0];
+		if (result == "success") {
+			string userId = temp[1];
+			string token = temp[2];
+			string userName = temp[3];
+			Debug.Log("result=" + result + ";userId=" + userId + ";token=" + token + ";userName=" + userName);
+		}
+		else {
+			Debug.Log("Login failed:" + message);
+		}
+	}
+}
+```
+
+## 5、 logout pullback
+Interface Description:<br>
+
+When the account logout interface is called, a callback message is sent to the appropriate method.<br>
+
+Method Definition: void onLogoutFinish(string message)<br>
+
+Parameter Description:<br>
+
+message is the logout result. success=success; fail=failure<br>
+
+Example:<br>
+```C#
+void onLogoutFinish(string message)  {
+	Debug.LogError("===onLogoutFinish : " + message);
+	if (message == "success")  {
+		Debug.LogError("Logout Successful");
+	} else {
+		Debug.LogError("Logout Failed");
+	}
+}
+```
+After the player has successfully logged in, the developer can use MiracleGames.User.AuthenticationManager.UserProfile.Id as the player's unique identifier and then complete the in-game login.<br>
+## 6、 Server Verification of Player Login Status Interface
+　　The verification of user login status on the server side is optional to integrate.<br>
+　　Reference:[（Chapter 5: Server-Side Player Login Status Verification Interface）](https://doc.mguwp.net/en/unityandroidsdklogin.html)
+## 7、 最佳实践
+　　● Once the user has logged in, the login status will remain as long as the user does not log out or uninstall the app.
+　　● After successful initialization, it should determine whether the user is logged in or not. If the user is not logged in, a login button will be provided, and the login screen will be opened after clicking the login button; if the user is already logged in, he/she can continue to
+　　● Users may logout, switch accounts, etc. in the login screen. After returning from the login screen, we need to get the user's login status and Id, and compare it with the status and Id before opening the login screen, and then process the corresponding logic.
